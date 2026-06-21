@@ -36,8 +36,8 @@
 
     /* Sender/Recipient */
     .address-col {
-        width: 60%;
-        padding-right: 10mm;
+        width: 72%; /* Increased from 60% to give addresses more horizontal space */
+        padding-right: 5mm;
         padding-left: 15mm; 
     }
     #sender {
@@ -45,6 +45,7 @@
         border-bottom: 0.25pt solid #b0b0b0;
         padding-bottom: 1mm;
         display: inline-block;
+        width: 100%; /* Allows the small font line to stretch out fully */
     }
     #sender p {
         margin: 0;
@@ -59,7 +60,7 @@
 
     /* Contact Info */
     .contact-col {
-        width: 40%;
+        width: 28%; /* Reduced from 40% to balance out the extra address space */
         font-size: 8.5pt;
         padding-right: 15mm;
     }
@@ -340,7 +341,7 @@
                 <td></td>
                 <td class="text-right">{{ doc.get_formatted("net_total") }}</td>
             </tr>
-            {% if doc.tax_category == "Reverse Charge" -%}
+            {% if doc.tax_category == "Reverse Charge" %}
                 <tr>
                     <td></td>
                     <td>Steuerschuldnerschaft des Leistungsempfängers / The recipient of the supply is liable for tax</td>
@@ -350,7 +351,7 @@
                     <td class="text-right"></td>
                 </tr>
             {% else %}
-                {% for tax_row in doc.taxes -%}
+                {% for tax_row in doc.taxes %}
                     {% if tax_row.tax_amount or print_settings.print_taxes_with_zero_amount %}
                         <tr>
                             <td></td>
@@ -361,7 +362,7 @@
                             <td class="text-right">{{ tax_row.get_formatted("tax_amount") }}</td>
                         </tr>
                     {% endif %}
-                {%- endfor %}
+                {% endfor %}
 
                 {% if doc.tax_exemption_reason %}
                     <tr>
@@ -372,7 +373,7 @@
                         <td colspan="2"></td>
                     </tr>
                 {% endif %}
-            {%- endif %}
+            {% endif %}
             <tr class="grand-total-row">
                 <td></td>
                 <td><strong>{{ _("Grand Total") }}</strong></td>
@@ -411,7 +412,7 @@
         {{ doc.terms }}
     {% endif %}
 
-    {% if doc.timesheets -%}
+    {% if doc.timesheets %}
     <div style="page-break-after: always"></div>
     <div class="timesheets">
         <p style="padding-top: 1em; padding-bottom: 0.33em">
@@ -467,7 +468,7 @@
             </table>
         </div>
     </div>
-    {%- endif %}
+    {% endif %}
 </div>
 
 <div id="footer-html" class="visible-pdf">
