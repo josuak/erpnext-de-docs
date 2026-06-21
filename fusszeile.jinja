@@ -1,0 +1,67 @@
+<style>
+    #footer-html {
+        padding: 0; 
+        width: 100%;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, "Liberation Sans", sans-serif;
+    }
+    .german-footer-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 0.5pt solid #888;
+        border-bottom: 0.5pt solid #888;
+        font-size: 7.5pt;
+        color: #666;
+        line-height: 1.4;
+    }
+    .german-footer-table td {
+        vertical-align: top;
+        padding: 3mm 0;
+    }
+    
+    .col-legal { width: 30%; padding-right: 2mm; }
+    .col-contact { width: 30%; padding-right: 2mm; }
+    .col-bank { width: 40%; }
+
+    .german-footer-table td strong {
+        color: #444;
+        font-weight: bold;
+    }
+</style>
+
+{% set company = frappe.get_doc("Company", doc.company) if doc.company else None %}
+{% set cmp_addr = frappe.get_doc("Address", doc.company_address) if doc.company_address else None %}
+
+<div id="footer-html" class="visible-pdf">
+    <table class="german-footer-table">
+        <tr>
+            <td class="col-legal">
+                <strong>{{ doc.company }}</strong><br>
+                Geschäftsführer: Max Mustermann<br>
+                Registergericht: Amtsgericht Stadt, HRB 12345<br>
+                {% if company and company.tax_id %}
+                    USt-IdNr.: {{ company.tax_id }}
+                {% else %}
+                    USt-IdNr.: DE123456789
+                {% endif %}
+            </td>
+
+            <td class="col-contact">
+                {% if cmp_addr %}
+                    {{ cmp_addr.address_line1 }}<br>
+                    {{ cmp_addr.pincode }} {{ cmp_addr.city }}<br>
+                {% endif %}
+                {% if company and company.phone_no %}Tel.: {{ company.phone_no }}<br>{% endif %}
+                {% if company and company.email %}Email: {{ company.email }}<br>{% endif %}
+                {% if company and company.website %}{{ company.website }}{% endif %}
+            </td>
+
+            <td class="col-bank">
+                Bankverbindung:<br>
+                Musterbank AG<br>
+                IBAN: DE99 1234 5678 9012 3456 78<br>
+                BIC: MUSTDED1XXX
+            </td>
+        </tr>
+    </table>
+</div>
