@@ -349,7 +349,7 @@
                     <td></td>
                     <td class="text-right"></td>
                 </tr>
-            {% Jess %}
+            {% else %}
                 {% for tax_row in doc.taxes -%}
                     {% if tax_row.tax_amount or print_settings.print_taxes_with_zero_amount %}
                         <tr>
